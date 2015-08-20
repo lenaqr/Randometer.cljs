@@ -67,7 +67,7 @@
      [:button {:on-click #(on-reset) :style {:margin-top "0.5em"}}
       "play again"])])
 
-(defn choose-one [x xs]
+(defn choose-corr [x xs]
   (let [game-state (atom {})
         init-game! (fn []
                      (let [boards (map #(puzzle muted-generator %) (cons x xs))
@@ -88,9 +88,22 @@
          boards keymap guess]))))
 
 (defn main-page []
-  [:div
-   [:h1 "Randometer"]
-   [choose-one 0.5 [0.25 0.33 0.67 0.75]]])
+  (let [app-state (atom {:game nil})]
+    (fn []
+      [:div
+       [:h1 "Randometer"]
+       [:label {:style {:display "block" :margin-bottom "1em"}}
+        "Select a game: "
+        [:select {:value (:game @app-state)
+                  :on-change #(swap! app-state assoc :game (-> % .-target .-value))}
+         [:option]
+         [:option {:value "choose-corr"} "Identify the uncorrelated sequence"]
+         [:option {:value "choose-bias"} "Identify the unbiased sequence"]
+         [:option {:value "decide-corr"} "Correlated or uncorrelated"]
+         [:option {:value "decide-bias"} "Biased or unbiased"]]]
+       (case (:game @app-state)
+         "choose-corr" [choose-corr 0.5 [0.25 0.33 0.67 0.75]]
+         nil)])))
 
 (reagent/render-component [main-page]
                           (. js/document (getElementById "app")))
