@@ -4,7 +4,37 @@
 
 (enable-console-print!)
 
-(println "Edits to this text should show up in your developer console.")
+(def size [24 6])
+
+(defn show-trial [x]
+  (if x "●" "○"))
+
+(defn trial []
+  (> 0.5 (rand)))
+
+(defn biased-trial [propensity]
+  (> propensity (rand)))
+
+(defn muted-trial [propensity memory]
+  (if (> propensity (rand))
+    (not memory)
+    memory))
+
+(defn biased-generator [n p]
+  (repeatedly n #(biased-trial p)))
+
+(defn muted-generator [n p]
+  (letfn [(helper [previous]
+            (lazy-seq
+             (cons previous
+                   (helper (muted-trial p previous)))))]
+    (take n (helper (trial)))))
+
+(defn puzzle [generator propensity]
+  (partition (first size) (generator (apply * size) propensity)))
+
+(defn shuffle-boards [boards]
+  (zipmap (range) (shuffle (range (count boards)))))
 
 ;; define your app data so that it doesn't get over-written on reload
 
