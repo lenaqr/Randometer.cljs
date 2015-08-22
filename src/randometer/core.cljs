@@ -41,7 +41,7 @@
                        :vertical-align "middle"
                        :margin "0.5em"}}
    (for [row board]
-     [:div.row (apply str (map show-trial row))])])
+     [:div.row {:style {:line-height "1"}} (apply str (map show-trial row))])])
 
 (defn board-chooser [{:keys [on-guess on-reset flavortext answertext]} boards keymap guess]
   [:fieldset {:on-click #(when (some? guess) (on-reset))}
