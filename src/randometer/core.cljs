@@ -87,6 +87,26 @@
                         :answertext (map #(str % " switch") (cons x xs))}
          boards keymap guess]))))
 
+(defn choose-bias [x xs]
+  (let [game-state (atom {})
+        init-game! (fn []
+                     (let [boards (map #(puzzle biased-generator %) (cons x xs))
+                           keymap (shuffle-boards boards)]
+                      (swap! game-state assoc
+                             :boards boards
+                             :keymap keymap
+                             :guess nil)))
+        guess! (fn [ix]
+                 (swap! game-state assoc :guess ix))]
+    (init-game!)
+    (fn []
+      (let [{:keys [boards keymap guess]} @game-state]
+        [board-chooser {:on-guess #(guess! %)
+                        :on-reset #(init-game!)
+                        :flavortext "Which is unbiased?"
+                        :answertext (map #(str % " ●") (cons x xs))}
+         boards keymap guess]))))
+
 (defn main-page []
   (let [app-state (atom {:game nil})]
     (fn []
@@ -103,6 +123,7 @@
          [:option {:value "decide-bias"} "Biased or unbiased"]]]
        (case (:game @app-state)
          "choose-corr" [choose-corr 0.5 [0.25 0.33 0.67 0.75]]
+         "choose-bias" [choose-bias 0.5 [0.25 0.33 0.67 0.75]]
          nil)])))
 
 (reagent/render-component [main-page]
