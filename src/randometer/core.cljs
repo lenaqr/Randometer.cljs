@@ -172,6 +172,12 @@
     (fn []
       [:div
        [:h1 "Randometer"]
+       [:p "This is a set of games that help train your intuition for random patterns. "
+        "For an overview and motivation, see "
+        [:a {:href "http://mindingourway.com/randometer/"} "Nate Soares' original blog post"]
+        ". You can also check out the "
+        [:a {:href "https://github.com/luac/Randometer.cljs"} "source code on Github"]
+        "."]
        [:label {:style {:display "block" :margin-bottom "1em"}}
         "Select a game: "
         [:select {:value (:game @app-state)

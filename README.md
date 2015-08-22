@@ -1,23 +1,10 @@
 # Randometer.cljs
 
 This is a browser implementation of Nate Soares' [Randometer][Soares].
+For an overview and motivation, see the [original blog post][blog].
 
 [Soares]: https://github.com/Soares/Randometer.hs
-
-## Overview
-
-From [the original README][Soares]:
-
-> This is a little set of games that have helped me gain an intuition
-> for random behavior. A better knowledge of what random patterns look
-> like has helped me, in real life, to better differentiate between
-> chance occurrences and actual patterns.
-
-> Humans are [biased to see patterns in random data][Tversky]: these
-> games go a little way towards helping identify and correct for that
-> bias, by staving off premature pattern matching.
-
-[Tversky]: http://psych.cornell.edu/sites/default/files/Gilo.Vallone.Tversky.pdf
+[blog]: http://mindingourway.com/randometer/
 
 ## Setup
 
