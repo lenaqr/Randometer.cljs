@@ -1,2 +1,11 @@
-/* some style */
+body {
+    margin: 0 auto;
+    max-width: 800px;
+    line-height: 1.4;
+    font-size: 18px;
+    color: #333;
+}
 
+h1, h2, h3 {
+    line-height: 1.0;
+}
